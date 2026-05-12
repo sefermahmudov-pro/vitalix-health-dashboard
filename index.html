@@ -69,7 +69,9 @@ Boyunuzu daxil edin və ideal çəkinizi öyrənin
 
 <div class="contentArea">
 
-<div id="idealInput" class="flexRow">
+<div id="idealInput"
+class="flexRow"
+style="display:grid;">
 
 <input
 id="weightInput"
@@ -280,7 +282,7 @@ document.getElementById("bmiInputs").style.display = "grid"
 }
 
 if(section == "water"){
-document.getElementById("waterInput").style.display = "grid"
+document.getElementById("waterInput").style.display = "grid"    
 }
 
 if(section == "calories"){
@@ -293,8 +295,9 @@ function calculate(){
 setResult("")
 
 if(
-document.getElementById("idealInput").style.display
-== "grid"
+window.getComputedStyle(
+document.getElementById("idealInput")
+).display !== "none"
 ){
 
 let value =
@@ -316,8 +319,9 @@ setResult(
 }
 
 if(
-document.getElementById("bmiInputs").style.display
-== "grid"
+window.getComputedStyle(
+document.getElementById("bmiInputs")
+).display !== "none"
 ){
 
 let weightValue =
@@ -370,8 +374,9 @@ setResult(
 }
 
 if(
-document.getElementById("waterInput").style.display
-== "grid"
+window.getComputedStyle(
+document.getElementById("waterInput")
+).display !== "none"
 ){
 
 let kgValue =
@@ -392,8 +397,9 @@ setResult(
 }
 
 if(
-document.getElementById("caloriesInput").style.display
-== "grid"
+window.getComputedStyle(
+document.getElementById("caloriesInput")
+).display !== "none"
 ){
 
 let age =
