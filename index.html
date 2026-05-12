@@ -1,148 +1,456 @@
 <!DOCTYPE html>
 <html lang="az">
-    <head>
-        <title>Esas sehife</title>
-        <link rel="stylesheet" href="style.css">
-        <meta charset="UTF-8">
-    </head>
-    <body>
-        <h1>Health App</h1>
-        <div id="menu">
 
-            <button onclick="showSection('ideal')">
-                İdeal Çəki
-            </button>
+<head>
 
-            <button onclick="showSection('bmi')">
-                Bədən Kütlə İndeksi
-            </button>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-            <button onclick="showSection('water')">
-                Gündəlik Su Ehtiyacı
-            </button>
+<title>Vitalix | Health Metrics</title>
 
-            <button onclick="showSection('calories')">
-                Gündəlik Kalori Ehtiyacı
-            </button>
+<link rel="stylesheet" href="style.css">
 
-        </div>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-                <div id="idealInput">
-                    <input id="weightInput" type="number" placeholder="Boy (cm)" oninput="calculate()">
-                </div>
-        
-                <p id="result"></p>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 
-                <div id="bmiInputs" style="display: none;">
-                    <input id="weight" type="number" placeholder="Kilo (kg)" oninput="calculate()">
-                    <input id="height" type="number" placeholder="Boy (m)" oninput="calculate()">
-                </div>
+</head>
 
-                <div id="waterInput" style="display: none;">
-                    <input id="kgInput" type="number" placeholder="Kilo (kg)" oninput="calculate()">
-                </div>
+<body class="themeIdeal">
 
-                <div id="caloriesInput" style="display: none;">
-                    <input id="ageInput" type="number" placeholder="Yaş" oninput="calculate()">
-                    <input id="calorieHeightInput" type="number" placeholder="Boy (cm)" oninput="calculate()">
-                    <input id="calorieWeightInput" type="number" placeholder="Kilo (kg)" oninput="calculate()">
-                    <select id="genderInput" onchange="calculate()">
-                        <option value="male">Kişi</option>
-                        <option value="female">Qadın</option>
-                    </select>
-                     <select id="activityInput" onchange="calculate()">
-                        <option value="1.2">Oturaq heyat</option>
-                        <option value="1.375">Az aktiv</option>
-                        <option value="1.55">Orta aktiv</option>
-                        <option value="1.725">Çox aktiv</option>
-                     </select>
-                </div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
 
-            <script>
-                function setResult(text) {
-                    document.getElementById("result").innerText = text}
-                function showSection(section) {
-                    document.getElementById("idealInput").style.display = "none"
-                    document.getElementById("bmiInputs").style.display = "none"
-                    document.getElementById("waterInput").style.display = "none"
-                    document.getElementById("caloriesInput").style.display = "none"
-                    
-                if (section == "ideal") {
-                    document.getElementById("idealInput").style.display = "block"}
+<div class="container">
 
-                if (section == "bmi") {document.getElementById("bmiInputs").style.display = "block"}
+<h1>Vitalix</h1>
 
-                if (section == "water") {document.getElementById("waterInput").style.display = "block"}
-                
-                if (section == "calories") {document.getElementById("caloriesInput").style.display = "block"}}
+<p class="topSubtitle">
+Sağlam həyat üçün gündəlik hesablamalar 💚
+</p>
 
-                function calculate() { setResult("")
-                    if (document.getElementById("idealInput").style.display == "block") {
+<div id="menu">
 
-                        let value = document.getElementById("weightInput").value
+<button class="menuButton idealTheme activeButton"
+onclick="showSection('ideal', event)">
+İdeal Çəki
+</button>
 
-                    if  (value == "") {return}
+<button class="menuButton bmiTheme"
+onclick="showSection('bmi', event)">
+Bədən Kütlə İndeksi
+</button>
 
-                        let height = Number(value)
-                        let idealWeight = height - 100
+<button class="menuButton waterTheme"
+onclick="showSection('water', event)">
+Gündəlik Su Ehtiyacı
+</button>
 
-                        setResult("Sənin ideal çəki aralığın: " + idealWeight + " kg")}
+<button class="menuButton calorieTheme"
+onclick="showSection('calories', event)">
+Gündəlik Kalori Ehtiyacı
+</button>
 
-                    if    (document.getElementById("bmiInputs").style.display == "block"){
+</div>
 
-                        let weightValue = (document.getElementById("weight").value)
-                        let heightValue = (document.getElementById("height").value)
+<div class="sectionInfo">
 
-                    if (weightValue == "" || heightValue == "" ) {return}
-                        let weight = Number(weightValue)
-                        let height = Number(heightValue)
-                        let bmi = (weight / (height * height))
-                        let bmiText = bmi.toFixed(2)
+<h2 id="sectionTitle">
+İdeal Çəki
+</h2>
 
-                    if (bmi < 18.5) { setResult ("BMİ: " + bmiText + " - Çəki azdır")}
-                        else if (bmi >= 18.5 && bmi < 25) {setResult("Bədən Kütlə İndeksi: " + bmiText + " - Normal")}  
-                            else {setResult("Bədən kütlə indeksin: " + bmiText + " - Artıq çəki")}}
-                    
-                    if    (document.getElementById("waterInput").style.display == "block"){
-                        let kgValue = (document.getElementById("kgInput").value)
+<p id="sectionSubtitle">
+Boyunuzu daxil edin və ideal çəkinizi öyrənin
+</p>
 
-                    if (kgValue == "") {return}
+</div>
 
-                            let idealWater = Number((kgValue * 35)/1000)
-                            let ondalikWater = idealWater.toFixed(2)
-                            setResult ("Gündəlik tövsiyə olunan su miqdarı: " + ondalikWater + " L")}
+<div class="contentArea">
 
-                    if  (document.getElementById("caloriesInput").style.display == "block"){
-                        let bmr
-                    
-                        let ageValue = (document.getElementById("ageInput").value)
-                        let heightValue = (document.getElementById("calorieHeightInput").value)
-                        let weightValue = (document.getElementById("calorieWeightInput").value)
-                        let genderValue = (document.getElementById("genderInput").value)
-                        let activityValue = (document.getElementById("activityInput").value)
+<div id="idealInput" class="flexRow">
 
-                     if ( ageValue == "" ||
-                            heightValue == "" ||
-                            weightValue == "")
-                             {return}
-                        
-                        ageValue = Number(ageValue)
-                        heightValue = Number(heightValue)
-                        weightValue = Number(weightValue)
-                        activityValue = Number(activityValue)        
+<input
+id="weightInput"
+type="number"
+placeholder="Boy (cm)"
+oninput="calculate()">
 
-                    if (genderValue == "male") {bmr = 10 * weightValue + 6.25 * heightValue - 5 * ageValue + 5}
-                    else {
-                        bmr = 10 * weightValue + 6.25 * heightValue - 5 * ageValue - 161}
-                        
-                        let calories = bmr * activityValue
-                        let caloriesText = calories.toFixed(0)
-                        setResult("Gündəlik kalori ehtiyacın: " + caloriesText + " kcal")}}
+</div>
 
+<div id="bmiInputs"
+class="flexRow"
+style="display:none;">
 
-                </script>
+<input
+id="weight"
+type="number"
+placeholder="Kilo (kg)"
+oninput="calculate()">
 
-            
-    </body>
+<input
+id="height"
+type="number"
+placeholder="Boy (cm)"
+oninput="calculate()">
 
+</div>
+
+<div id="waterInput"
+class="flexRow"
+style="display:none;">
+
+<input
+id="kgInput"
+type="number"
+placeholder="Kilo (kg)"
+oninput="calculate()">
+
+</div>
+
+<div id="caloriesInput"
+class="flexRow"
+style="display:none;">
+
+<input
+id="ageInput"
+type="number"
+placeholder="Yaş"
+oninput="calculate()">
+
+<input
+id="calorieHeightInput"
+type="number"
+placeholder="Boy (cm)"
+oninput="calculate()">
+
+<input
+id="calorieWeightInput"
+type="number"
+placeholder="Kilo (kg)"
+oninput="calculate()">
+
+<select id="genderInput"
+onchange="calculate()">
+
+<option value="male">
+Kişi
+</option>
+
+<option value="female">
+Qadın
+</option>
+
+</select>
+
+<select id="activityInput"
+onchange="calculate()">
+
+<option value="1.2">
+Oturaq həyat
+</option>
+
+<option value="1.375">
+Az aktiv
+</option>
+
+<option value="1.55">
+Orta aktiv
+</option>
+
+<option value="1.725">
+Çox aktiv
+</option>
+
+</select>
+
+</div>
+
+<div id="result">
+
+<div class="resultHeader">
+
+<span>📊</span>
+
+<h2>Nəticə</h2>
+
+</div>
+
+<p id="resultText"></p>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function setResult(text){
+
+if(text == ""){
+document.getElementById("result").style.display = "none"
+}
+else{
+document.getElementById("result").style.display = "block"
+}
+
+document.getElementById("resultText").innerText = text
+}
+
+function showSection(section,event){
+
+document.body.className = ""
+
+let buttons =
+document.querySelectorAll(".menuButton")
+
+buttons.forEach(button=>{
+button.classList.remove("activeButton")
+})
+
+event.target.classList.add("activeButton")
+
+let title =
+document.getElementById("sectionTitle")
+
+let subtitle =
+document.getElementById("sectionSubtitle")
+
+if(section == "ideal"){
+
+document.body.classList.add("themeIdeal")
+
+title.innerText = "İdeal Çəki"
+
+subtitle.innerText =
+"Boyunuzu daxil edin və ideal çəkinizi öyrənin"
+}
+
+if(section == "bmi"){
+
+document.body.classList.add("themeBMI")
+
+title.innerText =
+"Bədən Kütlə İndeksi"
+
+subtitle.innerText =
+"Boy və çəkinizə görə BMI hesablayın"
+}
+
+if(section == "water"){
+
+document.body.classList.add("themeWater")
+
+title.innerText =
+"Gündəlik Su Ehtiyacı"
+
+subtitle.innerText =
+"Gündəlik su ehtiyacınızı hesablayın"
+}
+
+if(section == "calories"){
+
+document.body.classList.add("themeCalories")
+
+title.innerText =
+"Gündəlik Kalori Ehtiyacı"
+
+subtitle.innerText =
+"Orqanizmin günlük kalori ehtiyacını öyrənin"
+}
+
+setResult("")
+
+document.getElementById("idealInput").style.display = "none"
+
+document.getElementById("bmiInputs").style.display = "none"
+
+document.getElementById("waterInput").style.display = "none"
+
+document.getElementById("caloriesInput").style.display = "none"
+
+if(section == "ideal"){
+document.getElementById("idealInput").style.display = "grid"
+}
+
+if(section == "bmi"){
+document.getElementById("bmiInputs").style.display = "grid"
+}
+
+if(section == "water"){
+document.getElementById("waterInput").style.display = "grid"
+}
+
+if(section == "calories"){
+document.getElementById("caloriesInput").style.display = "grid"
+}
+}
+
+function calculate(){
+
+setResult("")
+
+if(
+document.getElementById("idealInput").style.display
+== "grid"
+){
+
+let value =
+document.getElementById("weightInput").value
+
+if(value == ""){
+return
+}
+
+let height = Number(value)
+
+let idealWeight = height - 100
+
+setResult(
+"Sənin ideal çəki aralığın: "
++ idealWeight +
+" kg"
+)
+}
+
+if(
+document.getElementById("bmiInputs").style.display
+== "grid"
+){
+
+let weightValue =
+document.getElementById("weight").value
+
+let heightValue =
+document.getElementById("height").value
+
+if(weightValue == "" || heightValue == ""){
+return
+}
+
+let weight = Number(weightValue)
+
+let height =
+Number(heightValue / 100)
+
+let bmi =
+weight / (height * height)
+
+let bmiText =
+bmi.toFixed(2)
+
+if(bmi < 18.5){
+
+setResult(
+"BMİ: " +
+bmiText +
+" - Çəki azdır"
+)
+}
+
+else if(bmi >= 18.5 && bmi < 25){
+
+setResult(
+"Bədən Kütlə İndeksi: "
++ bmiText +
+" - Normal"
+)
+}
+
+else{
+
+setResult(
+"Bədən Kütlə İndeksi: "
++ bmiText +
+" - Artıq çəki"
+)
+}
+}
+
+if(
+document.getElementById("waterInput").style.display
+== "grid"
+){
+
+let kgValue =
+document.getElementById("kgInput").value
+
+if(kgValue == ""){
+return
+}
+
+let water =
+(kgValue * 35) / 1000
+
+setResult(
+"Gündəlik tövsiyə olunan su miqdarı: "
++ water.toFixed(2)
++ " L"
+)
+}
+
+if(
+document.getElementById("caloriesInput").style.display
+== "grid"
+){
+
+let age =
+Number(document.getElementById("ageInput").value)
+
+let height =
+Number(document.getElementById("calorieHeightInput").value)
+
+let weight =
+Number(document.getElementById("calorieWeightInput").value)
+
+let gender =
+document.getElementById("genderInput").value
+
+let activity =
+Number(document.getElementById("activityInput").value)
+
+if(
+age == "" ||
+height == "" ||
+weight == ""
+){
+return
+}
+
+let bmr
+
+if(gender == "male"){
+
+bmr =
+10 * weight +
+6.25 * height -
+5 * age +
+5
+}
+
+else{
+
+bmr =
+10 * weight +
+6.25 * height -
+5 * age -
+161
+}
+
+let calories =
+(bmr * activity).toFixed(0)
+
+setResult(
+"Gündəlik kalori ehtiyacın: "
++ calories +
+" kcal"
+)
+}
+}
+
+</script>
+
+</body>
 </html>
