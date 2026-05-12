@@ -191,14 +191,20 @@ Orta aktiv
 
 function setResult(text){
 
-if(text == ""){
-document.getElementById("result").style.display = "none"
+const result =
+document.getElementById("result")
+
+const resultText =
+document.getElementById("resultText")
+
+if(text === ""){
+result.style.display = "none"
 }
 else{
-document.getElementById("result").style.display = "block"
+result.style.display = "block"
 }
 
-document.getElementById("resultText").innerText = text
+resultText.innerText = text
 }
 
 function showSection(section,event){
@@ -212,7 +218,9 @@ buttons.forEach(button=>{
 button.classList.remove("activeButton")
 })
 
+if(event){
 event.target.classList.add("activeButton")
+}
 
 let title =
 document.getElementById("sectionTitle")
@@ -220,7 +228,7 @@ document.getElementById("sectionTitle")
 let subtitle =
 document.getElementById("sectionSubtitle")
 
-if(section == "ideal"){
+if(section === "ideal"){
 
 document.body.classList.add("themeIdeal")
 
@@ -230,7 +238,7 @@ subtitle.innerText =
 "Boyunuzu daxil edin və ideal çəkinizi öyrənin"
 }
 
-if(section == "bmi"){
+if(section === "bmi"){
 
 document.body.classList.add("themeBMI")
 
@@ -241,7 +249,7 @@ subtitle.innerText =
 "Boy və çəkinizə görə BMI hesablayın"
 }
 
-if(section == "water"){
+if(section === "water"){
 
 document.body.classList.add("themeWater")
 
@@ -252,7 +260,7 @@ subtitle.innerText =
 "Gündəlik su ehtiyacınızı hesablayın"
 }
 
-if(section == "calories"){
+if(section === "calories"){
 
 document.body.classList.add("themeCalories")
 
@@ -273,19 +281,19 @@ document.getElementById("waterInput").style.display = "none"
 
 document.getElementById("caloriesInput").style.display = "none"
 
-if(section == "ideal"){
+if(section === "ideal"){
 document.getElementById("idealInput").style.display = "grid"
 }
 
-if(section == "bmi"){
+if(section === "bmi"){
 document.getElementById("bmiInputs").style.display = "grid"
 }
 
-if(section == "water"){
-document.getElementById("waterInput").style.display = "grid"    
+if(section === "water"){
+document.getElementById("waterInput").style.display = "grid"
 }
 
-if(section == "calories"){
+if(section === "calories"){
 document.getElementById("caloriesInput").style.display = "grid"
 }
 }
@@ -293,6 +301,10 @@ document.getElementById("caloriesInput").style.display = "grid"
 function calculate(){
 
 setResult("")
+
+/* =========================
+   IDEAL WEIGHT
+========================= */
 
 if(
 window.getComputedStyle(
@@ -303,7 +315,7 @@ document.getElementById("idealInput")
 let value =
 document.getElementById("weightInput").value
 
-if(value == ""){
+if(value === ""){
 return
 }
 
@@ -318,6 +330,10 @@ setResult(
 )
 }
 
+/* =========================
+   BMI
+========================= */
+
 if(
 window.getComputedStyle(
 document.getElementById("bmiInputs")
@@ -330,14 +346,17 @@ document.getElementById("weight").value
 let heightValue =
 document.getElementById("height").value
 
-if(weightValue == "" || heightValue == ""){
+if(
+weightValue === "" ||
+heightValue === ""
+){
 return
 }
 
 let weight = Number(weightValue)
 
 let height =
-Number(heightValue / 100)
+Number(heightValue) / 100
 
 let bmi =
 weight / (height * height)
@@ -348,8 +367,8 @@ bmi.toFixed(2)
 if(bmi < 18.5){
 
 setResult(
-"BMİ: " +
-bmiText +
+"BMİ: "
++ bmiText +
 " - Çəki azdır"
 )
 }
@@ -373,6 +392,10 @@ setResult(
 }
 }
 
+/* =========================
+   WATER
+========================= */
+
 if(
 window.getComputedStyle(
 document.getElementById("waterInput")
@@ -382,12 +405,12 @@ document.getElementById("waterInput")
 let kgValue =
 document.getElementById("kgInput").value
 
-if(kgValue == ""){
+if(kgValue === ""){
 return
 }
 
 let water =
-(kgValue * 35) / 1000
+(Number(kgValue) * 35) / 1000
 
 setResult(
 "Gündəlik tövsiyə olunan su miqdarı: "
@@ -396,20 +419,38 @@ setResult(
 )
 }
 
+/* =========================
+   CALORIES
+========================= */
+
 if(
 window.getComputedStyle(
 document.getElementById("caloriesInput")
 ).display !== "none"
 ){
 
-let age =
-Number(document.getElementById("ageInput").value)
+let ageValue =
+document.getElementById("ageInput").value
 
-let height =
-Number(document.getElementById("calorieHeightInput").value)
+let heightValue =
+document.getElementById("calorieHeightInput").value
 
-let weight =
-Number(document.getElementById("calorieWeightInput").value)
+let weightValue =
+document.getElementById("calorieWeightInput").value
+
+if(
+ageValue === "" ||
+heightValue === "" ||
+weightValue === ""
+){
+return
+}
+
+let age = Number(ageValue)
+
+let height = Number(heightValue)
+
+let weight = Number(weightValue)
 
 let gender =
 document.getElementById("genderInput").value
@@ -417,17 +458,9 @@ document.getElementById("genderInput").value
 let activity =
 Number(document.getElementById("activityInput").value)
 
-if(
-age == "" ||
-height == "" ||
-weight == ""
-){
-return
-}
-
 let bmr
 
-if(gender == "male"){
+if(gender === "male"){
 
 bmr =
 10 * weight +
@@ -456,7 +489,12 @@ setResult(
 }
 }
 
-</script>
+window.onload = function(){
 
-</body>
-</html>
+showSection("ideal",{
+target: document.querySelector(".idealTheme")
+})
+
+}
+
+</script>
